@@ -1,17 +1,9 @@
-module clock_gate(
-  input clk_i,     
-  input en_i,     
-  output reg clk_o 
-);
-
-reg en_latched;
-
-always @ (posedge clk_i) begin
-  en_latched <= en_i;
-end
-
-always @ (*) begin
-  clk_o = clk_i & en_latched;
-end
-
+module clock_gating(clk_i,en_i,clk_o);
+  input clk_i;
+  input en_i;
+  reg en_latched;
+  output  clk_o;
+  always@(negedge clk_i)
+    assign en_latched=en_i;
+  assign clk_o=en_latched&&clk_i;
 endmodule
